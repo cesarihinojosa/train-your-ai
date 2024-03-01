@@ -1,0 +1,4 @@
+.DS_Store
+dait-venv/
+__pycache__/
+model/
