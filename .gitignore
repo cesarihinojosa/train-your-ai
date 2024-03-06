@@ -1,4 +1,4 @@
 .DS_Store
-dait-venv/
+tyai-venv/
 __pycache__/
 model/
