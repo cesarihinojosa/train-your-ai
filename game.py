@@ -3,6 +3,7 @@ import random
 from enum import Enum
 from collections import namedtuple
 import numpy as np
+import time
 
 pygame.init()
 font = pygame.font.Font('arial.ttf', 25)
@@ -28,12 +29,15 @@ SPEED = 1000
 
 class SnakeGameAI:
 
-    def __init__(self, w=640, h=480):
+    def __init__(self, eat_apple, stay_alive, die, w=640, h=480):
         self.w = w
         self.h = h
-        # init display
-        self.display = pygame.display.set_mode((self.w, self.h))
-        pygame.display.set_caption('Snake')
+        self.eat_apple = eat_apple
+        self.stay_alive = stay_alive
+        self.die = die
+        # # init display
+        # self.display = pygame.display.set_mode((self.w, self.h))
+        # pygame.display.set_caption('Snake')
         self.clock = pygame.time.Clock()
         self.reset()
 
@@ -74,24 +78,24 @@ class SnakeGameAI:
         self.snake.insert(0, self.head)
         
         # 3. check if game over
-        reward = 0                             # REWARD FUNCTION IF IS ALIVE
+        reward = self.stay_alive                           # REWARD FUNCTION IF IS ALIVE
         game_over = False
         if self.is_collision() or self.frame_iteration > 100*len(self.snake): # if collision
             game_over = True
-            reward = -10                        # REWARD FUNCTION IF DIES
+            reward = self.die                     # REWARD FUNCTION IF DIES
             return reward, game_over, self.score
 
         # 4. place new food or just move
         if self.head == self.food: # if eats food
             self.score += 1
-            reward = 10                          # REWARD FUNCTION IF EATS FOOD
+            reward = self.eat_apple                        # REWARD FUNCTION IF EATS FOOD
             self._place_food()
         else:
             self.snake.pop()
         
         # 5. update ui and clock
-        self._update_ui()
-        self.clock.tick(SPEED)
+        #self._update_ui()
+        #self.clock.tick(SPEED)
         # 6. return game over and score
         return reward, game_over, self.score
 
