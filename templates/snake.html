@@ -16,6 +16,13 @@
       <div id="scoreText">0</div>
       <button id="resetBtn">Reset</button>
     </div>
+
+    <div id="train">
+      <form action="/train" method="POST">
+        <input type="submit" value="train" />
+      </form>
+    </div>
+
     <script src="{{url_for('static', filename='index.js')}}"></script>
   </body>
 </html>

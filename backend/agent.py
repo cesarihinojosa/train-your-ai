@@ -2,9 +2,8 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from backend.game import SnakeGameAI, Direction, Point, BLOCK_SIZE
-from model import Linear_QNet, QTrainer
-from helper import plot
+from .gamepackage import SnakeGameAI, Direction, Point, BLOCK_SIZE
+from .gamepackage import Linear_QNet, QTrainer
 import time
 
 MAX_MEMORY = 100_000
@@ -137,9 +136,9 @@ def train(eat_apple, stay_alive, die):
             if score > record:
                 record = score
                 agent.model.save()
+            total_score += score
 
             print('Game', agent.n_games, 'Score', score, 'Record:', record)
-            total_score += score
             # plot_scores.append(score)
             # plot_mean_scores.append(mean_score)
             # plot(plot_scores, plot_mean_scores)
@@ -148,26 +147,28 @@ def train(eat_apple, stay_alive, die):
     return agent.n_games, record, mean_score
 
 
-
-if __name__ == '__main__':
+def start():
     print()
     print("-------TRAINING BEGIN-------")
-    notes = input("NOTES: ")
+    # notes = input("NOTES: ")
     start_time = time.time()
 
-    eat_apple = int(input("reward function for eating apple: "))
-    stay_alive = int(input("reward function for staying alive: "))
-    die = int(input("reward function for dying: "))
+    # eat_apple = int(input("reward function for eating apple: "))
+    # stay_alive = int(input("reward function for staying alive: "))
+    # die = int(input("reward function for dying: "))
 
-    num_games, high_score, avg_score = train(eat_apple, stay_alive, die)
+    num_games, high_score, avg_score = train(10, 0, -10)
 
-    print(f"NOTES: {notes}")
-    print(f"EAT APPLE: {eat_apple}")
-    print(f"STAY ALIVE: {stay_alive}")
-    print(f"DIE: {die}")
+    # print(f"NOTES: {notes}")
+    # print(f"EAT APPLE: {eat_apple}")
+    # print(f"STAY ALIVE: {stay_alive}")
+    # print(f"DIE: {die}")
     print(f"TOTAL GAMES: {num_games}")
     print(f"HIGH SCORE:  {high_score}")
     print(f"AVERAGE SCORE {avg_score}")
     print("TOTAL TRAINING TIME: %s" % (time.time() - start_time))
     print("-------TRAINING COMPLETE-------")
     print()
+
+if __name__ == '__main__':
+    start()
