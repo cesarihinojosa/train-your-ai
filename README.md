@@ -1,3 +1,3 @@
 # train-your-ai
 
-from db branch
+from web branch

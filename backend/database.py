@@ -11,6 +11,8 @@ def create_database(db_name):
 
 Base = declarative_base()
 
+#TODO: FIX FK BUG!!!
+
 class User(Base):
     __tablename__ = "user"
 
@@ -18,7 +20,6 @@ class User(Base):
     first_name = Column("first_name", String)
     last_initial = Column("last_initial", CHAR)
     grade = Column("grade", Integer)
-    ai = relationship("AI", back_populates="user")
 
     def __init__(self, first_name, last_initial, grade):
         self.first_name = first_name
@@ -38,7 +39,6 @@ class AI(Base):
     stay_alive = Column("stay_alive", Integer)
     dies = Column("dies", Integer)
     user_id = Column(Integer, ForeignKey("user.user_id"), nullable=False)
-    user = relationship("User", back_populates = "ai")
 
     def __init__(self, high_score, average_score, eat_apple, stay_alive, dies, user_id):
         self.high_score = high_score
@@ -51,8 +51,7 @@ class AI(Base):
     def __repr__(self):
         return f"({self.ai_id}) ({self.high_score}) ({self.average_score}) ({self.eat_apple}) ({self.stay_alive}) ({self.dies}) ({self.user_id})"
 
-
-User.ai = relationship("AI", order_by = AI.ai_id, back_populates = "user")
+#User.ai = relationship("AI", order_by = AI.ai_id, back_populates = "user")
 session = create_database("tyai.db")
 
 def add_user(user): #TODO: How to handle edge case of duplicates
