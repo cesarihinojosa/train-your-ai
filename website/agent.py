@@ -2,8 +2,8 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from .gamepackage import SnakeGameAI, Direction, Point, BLOCK_SIZE
-from .gamepackage import Linear_QNet, QTrainer
+from .game import SnakeGameAI, Direction, Point, BLOCK_SIZE
+from .model import Linear_QNet, QTrainer
 import time
 
 MAX_MEMORY = 100_000

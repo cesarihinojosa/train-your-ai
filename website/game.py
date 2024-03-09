@@ -3,9 +3,15 @@ import random
 from enum import Enum
 from collections import namedtuple
 import numpy as np
+from flask import Blueprint, render_template
+
+game = Blueprint('game', __name__)
+
+@game.route('/get_ui_data', methods=['GET'])
+def get_ui_data():
+    return DATA
 
 pygame.init()
-#font = pygame.font.SysFont('arial', 25)
 DATA = {}
 
 class Direction(Enum):
