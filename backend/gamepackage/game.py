@@ -3,11 +3,10 @@ import random
 from enum import Enum
 from collections import namedtuple
 import numpy as np
-import time
 
 pygame.init()
-font = pygame.font.Font('arial.ttf', 25)
 #font = pygame.font.SysFont('arial', 25)
+DATA = {}
 
 class Direction(Enum):
     RIGHT = 1
@@ -26,6 +25,9 @@ BLACK = (0,0,0)
 
 BLOCK_SIZE = 20
 SPEED = 1000
+
+def get_data():
+    return DATA
 
 class SnakeGameAI:
 
@@ -94,7 +96,7 @@ class SnakeGameAI:
             self.snake.pop()
         
         # 5. update ui and clock
-        #self._update_ui()
+        self._update_ui()
         self.clock.tick(SPEED)
         # 6. return game over and score
         return reward, game_over, self.score
@@ -112,19 +114,41 @@ class SnakeGameAI:
 
         return False
 
-
     def _update_ui(self):
-        self.display.fill(BLACK)
 
+        data = {}
+        data['snake'] = []
+
+        i = 0
         for pt in self.snake:
-            pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
-            pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
+            data['snake'].append({'x': pt.x, 'y': pt.y})
+            if ((data['snake'][i]['x'] != pt.x) or (data['snake'][i]['y'] != pt.y)):
+                print(f"DATA INCONSISTENT")
+                print(f"SNAKE: x: {pt.x}, y: {pt.y}")
+                print(f"JSON DATA: x: {data['snake'][i]['x']}, y: {data['snake'][i]['x']}")
 
-        pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
+            i = i + 1
 
-        text = font.render("Score: " + str(self.score), True, WHITE)
-        self.display.blit(text, [0, 0])
-        pygame.display.flip()
+        data['apple'] = {'x': self.food.x, 'y': self.food.y}
+        if((data['apple']['x'] != self.food.x) or (data['apple']['y'] != self.food.y)):
+            print(f"DATA INCONSISTENT")
+            print(f"APPLE: x: {self.food.x}, y: {self.food.y}")
+            print(f"JSON DATA: x: {data['apple']['x']}, y: {data['apple']['y']}")
+
+        DATA = data
+
+    # def _update_ui(self):
+    #     self.display.fill(BLACK)
+
+    #     for pt in self.snake:
+    #         pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
+    #         pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
+
+    #     pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
+
+    #     text = font.render("Score: " + str(self.score), True, WHITE)
+    #     self.display.blit(text, [0, 0])
+    #     pygame.display.flip()
 
 
     def _move(self, action):
