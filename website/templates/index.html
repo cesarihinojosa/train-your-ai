@@ -4,8 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RL APP</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
   </head>
   <body>
     <h1>hello from index.html</h1>
+
+    <div>
+      <input type="text" id="username" placeholder="username">
+      <button id="join-btn">connect</button>
+    </div>
+
   </body>
+  <script>
+    const socket = io({autoConnect: false});
+    document.getElementById("join-btn").addEventListener("click", function() {
+      let username = document.getElementById("username").value;
+      socket.connect();
+
+      socket.on("connect", function() {
+        socket.emit("user_join", username);
+      })
+    })
+
+  </script>
+
 </html>
