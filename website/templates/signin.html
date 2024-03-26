@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}
+    Sign In
+{% endblock %}
+
+{% block container %}
+    <form method="POST">
+        <h3 align="center">sign in</h3>
+        <div class="form-group">
+            <label for="first-name">first name</label>
+            <input 
+                type="text" 
+                class="form-control"
+                name="first-name"
+                id="first-name"
+                placeholder="enter first name"
+            >
+        </div>
+        <div class="form-group">
+            <label for="grade-level">grade level</label>
+            <input 
+                type="text" 
+                class="form-control"
+                name="grade-level"
+                id="grade-level"
+                placeholder="enter grade level"
+            >
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">let's go</button>
+    </form>
+{% endblock %}

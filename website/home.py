@@ -5,11 +5,12 @@ home = Blueprint('home', __name__)
 
 @home.route("/")
 def app_home():
-    return render_template('index.html')
+    return render_template('base.html')
 
-@home.route("/train", methods=['GET', 'POST'])
+@home.route("/train")
 def train():
-    if request.method == 'POST':
-        start()
-    return "hello"
+    return render_template('snake.html')
 
+@home.route("/index")
+def index():
+    return render_template('index.html')
