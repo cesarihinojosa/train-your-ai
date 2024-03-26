@@ -8,9 +8,6 @@ def create_app():
     app.config["DEBUG"] = True
     app.config['SECRET_KEY'] = 'wdwehdi2hiouh3u'
 
-    from .game import game
-    app.register_blueprint(game, url_prefix='/')
-
     from .home import home
     app.register_blueprint(home, url_prefix='/')
 

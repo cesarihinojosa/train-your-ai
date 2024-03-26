@@ -1,18 +1,12 @@
 import pygame
 import random
+import numpy as np
 from enum import Enum
 from collections import namedtuple
-import numpy as np
-from flask import Blueprint, render_template
-
-game = Blueprint('game', __name__)
-
-@game.route('/get_ui_data', methods=['GET'])
-def get_ui_data():
-    return DATA
+from .events import socketio
+from flask_socketio import emit
 
 pygame.init()
-DATA = {}
 
 class Direction(Enum):
     RIGHT = 1
@@ -32,8 +26,8 @@ BLACK = (0,0,0)
 BLOCK_SIZE = 20
 SPEED = 1000
 
-def get_data():
-    return DATA
+def send_data(data):
+    socketio.emit("snake_data", {"data": data})
 
 class SnakeGameAI:
 
@@ -141,8 +135,8 @@ class SnakeGameAI:
             print(f"APPLE: x: {self.food.x}, y: {self.food.y}")
             print(f"JSON DATA: x: {data['apple']['x']}, y: {data['apple']['y']}")
 
-        DATA = data
-
+        print(data)
+        send_data(data)
     # def _update_ui(self):
     #     self.display.fill(BLACK)
 

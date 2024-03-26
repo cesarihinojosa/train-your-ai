@@ -11,5 +11,5 @@ def app_home():
 def train():
     if request.method == 'POST':
         start()
-    return render_template('snake.html')
+    return "hello"
 
