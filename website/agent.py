@@ -2,7 +2,7 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from .game import SnakeGameAI, Direction, Point, BLOCK_SIZE
+from .game import SnakeGameAI, Direction, Point, BLOCK_SIZE, send_data
 from .model import Linear_QNet, QTrainer
 import time
 
@@ -150,19 +150,11 @@ def train(eat_apple, stay_alive, die):
 def start():
     print()
     print("-------TRAINING BEGIN-------")
-    # notes = input("NOTES: ")
+    
     start_time = time.time()
 
-    # eat_apple = int(input("reward function for eating apple: "))
-    # stay_alive = int(input("reward function for staying alive: "))
-    # die = int(input("reward function for dying: "))
 
     num_games, high_score, avg_score = train(10, 0, -10)
-
-    # print(f"NOTES: {notes}")
-    # print(f"EAT APPLE: {eat_apple}")
-    # print(f"STAY ALIVE: {stay_alive}")
-    # print(f"DIE: {die}")
     print(f"TOTAL GAMES: {num_games}")
     print(f"HIGH SCORE:  {high_score}")
     print(f"AVERAGE SCORE {avg_score}")

@@ -10,6 +10,15 @@
     <h1>hello from index.html</h1>
 
     <div>
+      <ul id="ul-snake-data">
+      </ul>
+    </div>
+
+    <div>
+      <button id="btn-train">train</button>
+    </div>
+
+    <div>
       <input type="text" id="username" placeholder="username">
       <button id="join-btn">connect</button>
     </div>
@@ -24,6 +33,18 @@
       socket.on("connect", function() {
         socket.emit("user_join", username);
       })
+    })
+
+    document.getElementById("btn-train").addEventListener("click", function(){
+      socket.emit("train");
+    })
+
+    socket.on("snake_data", function(data){
+      let ul = document.getElementById("ul-snake-data");
+      let li = document.createElement("li")
+      li.appendChild(document.createTextNode(data["data"]["snake"][0]["x"]));
+      ul.appendChild(li)
+      ul.scrollTop = ul.scrollHeight;
     })
 
   </script>
