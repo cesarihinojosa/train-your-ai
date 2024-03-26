@@ -11,6 +11,9 @@ def create_app():
     from .home import home
     app.register_blueprint(home, url_prefix='/')
 
+    from .auth import auth
+    app.register_blueprint(auth, url_prefix='/')
+
     socketio.init_app(app)
 
     return app
