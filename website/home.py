@@ -11,3 +11,6 @@ def app_home():
 def train():
     return render_template('snake.html')
 
+@home.route("/index")
+def index():
+    return render_template('index.html')

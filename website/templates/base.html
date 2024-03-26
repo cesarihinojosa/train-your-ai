@@ -21,9 +21,21 @@
     <title>{% block title %}Home{% endblock %}</title>
 </head>
 <body>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-danger alter-dismissable fade show" role="alert">
+                {{ message[1] }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <div class="container">
         {% block container %}
         {% endblock %}
     </div>
+
 </body>
 </html>
