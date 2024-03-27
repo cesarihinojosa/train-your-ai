@@ -1,9 +1,7 @@
 import functools
-import random
 from flask_login import current_user
-from flask_socketio import disconnect, join_room
+from flask_socketio import disconnect
 from .extensions import socketio
-from .agent import start
 
 def authenticated_only(f):
     @functools.wraps(f)
@@ -25,5 +23,6 @@ def handle_user_join(username):
 
 @socketio.on("train")
 @authenticated_only
-def handle_train():
-    start()
+def handle_train(food, alive, die):
+    from .agent import start
+    start(food, alive, die)

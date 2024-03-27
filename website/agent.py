@@ -2,8 +2,11 @@ import torch
 import random
 import numpy as np
 from collections import deque
-from .game import SnakeGameAI, Direction, Point, BLOCK_SIZE, send_data
+from flask_login import current_user
+from .game import SnakeGameAI, Direction, Point, BLOCK_SIZE
 from .model import Linear_QNet, QTrainer
+from .dbmodels import AI
+from . import db
 import time
 
 MAX_MEMORY = 100_000
@@ -19,7 +22,6 @@ class Agent:
         self.memory = deque(maxlen=MAX_MEMORY) # popleft()
         self.model = Linear_QNet(11, 256, 3) # model is initialized here
         self.trainer = QTrainer(self.model, lr=LR, gamma=self.gamma)
-
 
     def get_state(self, game):
         head = game.snake[0]
@@ -64,7 +66,6 @@ class Agent:
             game.food.y < game.head.y,  # food up
             game.food.y > game.head.y  # food down
             ]
-
         return np.array(state, dtype=int)
 
     def remember(self, state, action, reward, next_state, done):
@@ -78,8 +79,6 @@ class Agent:
 
         states, actions, rewards, next_states, dones = zip(*mini_sample)
         self.trainer.train_step(states, actions, rewards, next_states, dones)
-        #for state, action, reward, nexrt_state, done in mini_sample:
-        #    self.trainer.train_step(state, action, reward, next_state, done)
 
     def train_short_memory(self, state, action, reward, next_state, done):
         self.trainer.train_step(state, action, reward, next_state, done)
@@ -96,9 +95,7 @@ class Agent:
             prediction = self.model(state0)
             move = torch.argmax(prediction).item()
             final_move[move] = 1
-
         return final_move
-
 
 def train(eat_apple, stay_alive, die):
 
@@ -111,7 +108,7 @@ def train(eat_apple, stay_alive, die):
     score = 0
     agent = Agent()
     game = SnakeGameAI(eat_apple, stay_alive, die)
-    while agent.n_games < 101:
+    while agent.n_games <= 100:
         # get old state
         state_old = agent.get_state(game)
 
@@ -140,22 +137,23 @@ def train(eat_apple, stay_alive, die):
             total_score += score
 
             print('Game', agent.n_games, 'Score', score, 'Record:', record)
-            # plot_scores.append(score)
-            # plot_mean_scores.append(mean_score)
-            # plot(plot_scores, plot_mean_scores)
 
     mean_score = total_score / agent.n_games
     return agent.n_games, record, mean_score
 
+def log_to_db(high_score, avg_score, eat, alive, die, user_id):
+    ai = AI(high_score=int(high_score), avg_score=int(avg_score), eat=int(eat), alive=int(alive), die=int(die), user_id=user_id)
+    db.session.add(ai)
+    db.session.commit()
 
-def start():
+def start(eat, alive, die):
     print()
     print("-------TRAINING BEGIN-------")
-    
     start_time = time.time()
 
+    num_games, high_score, avg_score = train(int(eat), int(alive), int(die))
+    log_to_db(high_score, avg_score, eat, alive, die, current_user.id)
 
-    num_games, high_score, avg_score = train(10, 0, -10)
     print(f"TOTAL GAMES: {num_games}")
     print(f"HIGH SCORE:  {high_score}")
     print(f"AVERAGE SCORE {avg_score}")
