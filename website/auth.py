@@ -1,18 +1,26 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import login_user, login_required, logout_user, current_user
+from . import db
+from .dbmodels import User
 
 auth = Blueprint('auth', __name__)
 
-@auth.route("sign-in", methods=['GET', 'POST'])
-def sign_in():
+@auth.route("signin", methods=['GET', 'POST'])
+def signin():
     if request.method == 'POST':
         first_name = request.form.get('first-name')
         grade_level = request.form.get('grade-level')
         if valid_input(first_name, grade_level):
-            pass
+            new_user = User(first_name=first_name, grade_level=grade_level)
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            return redirect(url_for("home.index"))
     return render_template("signin.html")
 
-@auth.route("log-in", methods=['GET', 'POST'])
-def log_in():
+#not being used at the moment
+@auth.route("login", methods=['GET', 'POST'])
+def login():
     return render_template("login.html")
 
 def valid_input(first_name, grade_level):
