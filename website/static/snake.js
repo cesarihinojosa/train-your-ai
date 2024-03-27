@@ -163,3 +163,17 @@ function resetGame() {
     ];
     gameStart();
 };
+
+const socket = io();
+
+document.getElementById("btn-train").addEventListener("click", function () {
+    socket.emit("train");
+})
+
+socket.on("snake_data", function (data) {
+    let ul = document.getElementById("ul-snake-data");
+    let li = document.createElement("li")
+    li.appendChild(document.createTextNode(data["data"]["snake"][0]["x"]));
+    ul.appendChild(li)
+    ul.scrollTop = ul.scrollHeight;
+})

@@ -9,6 +9,7 @@ document.getElementById("join-btn").addEventListener("click", function () {
     })
 })
 
+
 document.getElementById("btn-train").addEventListener("click", function () {
     socket.emit("train");
 })
