@@ -18,14 +18,6 @@ def authenticated_only(f):
 @authenticated_only
 def handle_connect():
     print(f"{current_user.first_name} connected")
-#     join()
-    
-# def join():
-#     username = current_user.first_name
-#     room = random.randint(1, 100000000)
-#     join_room(room)
-#     print(username + ' has entered the room.', to=room)
-
 
 @socketio.on("user_join")
 def handle_user_join(username):

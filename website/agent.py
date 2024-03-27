@@ -108,6 +108,7 @@ def train(eat_apple, stay_alive, die):
     plot_mean_scores = []
     total_score = 0
     record = 0
+    score = 0
     agent = Agent()
     game = SnakeGameAI(eat_apple, stay_alive, die)
     while agent.n_games < 101:
@@ -118,7 +119,7 @@ def train(eat_apple, stay_alive, die):
         final_move = agent.get_action(state_old)
 
         # perform move and get new state
-        reward, done, score = game.play_step(final_move)
+        reward, done, score = game.play_step(final_move, agent.n_games, total_score, record, score)
         state_new = agent.get_state(game)
 
         # train short memory
