@@ -5,6 +5,8 @@ from enum import Enum
 from collections import namedtuple
 from .events import socketio
 from flask_socketio import emit
+from flask_login import current_user
+from flask import request
 
 pygame.init()
 
@@ -27,7 +29,7 @@ BLOCK_SIZE = 20
 SPEED = 1000
 
 def send_data(data):
-    socketio.emit("snake_data", {"data": data})
+    socketio.emit("snake_data", {"data": data}, to=request.sid)
 
 class SnakeGameAI:
 

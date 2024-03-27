@@ -14,7 +14,7 @@ def signin():
             new_user = User(first_name=first_name, grade_level=grade_level)
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user)
+            login_user(new_user, remember=False)
             return redirect(url_for("home.index"))
     return render_template("signin.html")
 
@@ -22,6 +22,11 @@ def signin():
 @auth.route("login", methods=['GET', 'POST'])
 def login():
     return render_template("login.html")
+
+@auth.route("logout")
+def logout():
+    logout_user()
+    return redirect(url_for("auth.signin"))
 
 def valid_input(first_name, grade_level):
     if len(first_name) < 2:

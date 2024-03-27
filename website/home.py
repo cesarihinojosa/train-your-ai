@@ -7,8 +7,8 @@ home = Blueprint('home', __name__)
 def app_home():
     return render_template('base.html')
 
-@home.route("/train")
-def train():
+@home.route("/snake")
+def snake():
     return render_template('snake.html')
 
 @home.route("/index")
