@@ -69,7 +69,7 @@ class SnakeGameAI:
             self._place_food()
 
 
-    def play_step(self, action):
+    def play_step(self, action, games, total_score, record, score):
         self.frame_iteration += 1
         # 1. collect user input
         for event in pygame.event.get():
@@ -98,7 +98,7 @@ class SnakeGameAI:
             self.snake.pop()
         
         # 5. update ui and clock
-        self._update_ui()
+        self._update_ui(games, total_score, record, score)
         self.clock.tick(SPEED)
         # 6. return game over and score
         return reward, game_over, self.score
@@ -116,10 +116,11 @@ class SnakeGameAI:
 
         return False
 
-    def _update_ui(self):
+    def _update_ui(self, games, total_score, record, score):
 
         data = {}
         data['snake'] = []
+        data['stats'] = {'games': games, 'record': record, 'score': score}
 
         i = 0
         for pt in self.snake:
