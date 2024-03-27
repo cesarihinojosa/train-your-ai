@@ -28,6 +28,7 @@ BLACK = (0,0,0)
 BLOCK_SIZE = 20
 SPEED = 1000
 
+#publisher of training data
 def send_data(data):
     socketio.emit("snake_data", {"data": data}, to=request.sid)
 
@@ -39,12 +40,8 @@ class SnakeGameAI:
         self.eat_apple = eat_apple
         self.stay_alive = stay_alive
         self.die = die
-        # # init display
-        # self.display = pygame.display.set_mode((self.w, self.h))
-        # pygame.display.set_caption('Snake')
         self.clock = pygame.time.Clock()
         self.reset()
-
 
     def reset(self):
         # init game state
@@ -60,14 +57,12 @@ class SnakeGameAI:
         self._place_food()
         self.frame_iteration = 0
 
-
     def _place_food(self):
         x = random.randint(0, (self.w-BLOCK_SIZE )//BLOCK_SIZE )*BLOCK_SIZE
         y = random.randint(0, (self.h-BLOCK_SIZE )//BLOCK_SIZE )*BLOCK_SIZE
         self.food = Point(x, y)
         if self.food in self.snake:
             self._place_food()
-
 
     def play_step(self, action, games, total_score, record, score):
         self.frame_iteration += 1
@@ -102,7 +97,6 @@ class SnakeGameAI:
         self.clock.tick(SPEED)
         # 6. return game over and score
         return reward, game_over, self.score
-
 
     def is_collision(self, pt=None):
         if pt is None:
@@ -140,19 +134,6 @@ class SnakeGameAI:
 
         print(data)
         send_data(data)
-    # def _update_ui(self):
-    #     self.display.fill(BLACK)
-
-    #     for pt in self.snake:
-    #         pygame.draw.rect(self.display, BLUE1, pygame.Rect(pt.x, pt.y, BLOCK_SIZE, BLOCK_SIZE))
-    #         pygame.draw.rect(self.display, BLUE2, pygame.Rect(pt.x+4, pt.y+4, 12, 12))
-
-    #     pygame.draw.rect(self.display, RED, pygame.Rect(self.food.x, self.food.y, BLOCK_SIZE, BLOCK_SIZE))
-
-    #     text = font.render("Score: " + str(self.score), True, WHITE)
-    #     self.display.blit(text, [0, 0])
-    #     pygame.display.flip()
-
 
     def _move(self, action):
         # [straight, right, left]

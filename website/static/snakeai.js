@@ -17,20 +17,27 @@ let games = 0;
 
 const socket = io();
 
+//triggers when train button is clicked, sends call to train event that begins training
 document.getElementById("btn-train").addEventListener("click", function () {
     if (games == 0 || games == 100) { //ensure no more than one round of training can happen
-        socket.emit("train");
+        let food = document.getElementById("food").value;
+        let alive = document.getElementById("alive").value;
+        let die = document.getElementById("die").value;
+        socket.emit("train", food, alive, die);
     }
 })
 
+//subscriber to training data
 socket.on("snake_data", function (data) {
     clearBoard();
     foodX = data["data"]["apple"]["x"];
     foodY = data["data"]["apple"]["y"];
-    snake = data["data"]["snake"]
-    games = data["data"]["stats"]["games"]
+    snake = data["data"]["snake"];
+    games = data["data"]["stats"]["games"];
+    score = data["data"]["stats"]["score"];
     drawFood();
     drawSnake();
+    drawStats();
 })
 
 function clearBoard() {
@@ -51,6 +58,10 @@ function drawSnake() {
         ctx.strokeRect(snakePart.x, snakePart.y, unitSize, unitSize);
     })
 };
+
+function drawStats() {
+    scoreText.textContent = score;
+}
 
 function displayGameOver() {
     ctx.font = "50px MV Boli";

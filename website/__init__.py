@@ -3,8 +3,6 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from os import path
 from .events import socketio
-from . import agent
-from . import game
 
 db = SQLAlchemy()
 DB_NAME = "database.db"
