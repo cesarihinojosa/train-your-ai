@@ -15,7 +15,7 @@ def signin():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=False)
-            return redirect(url_for("views.index"))
+            return redirect(url_for("views.intro"))
     return render_template("signin.html")
 
 #not being used at the moment

@@ -10,6 +10,10 @@ def home():
 def snake():
     return render_template('snake.html')
 
+@views.route("/intro")
+def intro():
+    return render_template('intro.html')
+
 @views.route("/index")
 def index():
     return render_template('index.html')

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Introduction
+{% endblock %}
+
+{% block container %}
+    <div class="mt-5" style="width: 400px; height:40px"></div>
+    <div class="text-center">
+        <img class="rounded" style="max-width: 390px" src="{{url_for('static', filename='chick1.jpeg')}}" alt="">
+    </div>
+    <br>
+    <div class="mx-auto mt-5" style="width: 510px;">
+        <p class="text-center">If you give a chick food when it does a backflip, 
+            it will do more backlips to get more food. Also,
+            if you electricute a chick (don't do that) when it 
+            misbehaves, it won't misbehaves as often. Think of
+            training your AI like this. This method is called 
+            <strong>reinforcment learning</strong>. You will
+            be training your AI to play the game snake.</p>.
+        </p>
+        <div class="mx-auto mt-1" style="width: 102px;">
+            <a href="/snake">get started</a>
+        </div>
+    </div>
+{% endblock %}
