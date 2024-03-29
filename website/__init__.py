@@ -18,8 +18,8 @@ def create_app():
     login_manager.login_view = "auth.signin"
     login_manager.init_app(app)
 
-    from .home import home
-    app.register_blueprint(home, url_prefix='/')
+    from .views import views
+    app.register_blueprint(views, url_prefix='/')
 
     from .auth import auth
     app.register_blueprint(auth, url_prefix='/')

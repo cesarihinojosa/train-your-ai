@@ -14,13 +14,39 @@
       href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
       crossorigin="anonymous"
     />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-    <title>{% block title %}Home{% endblock %}</title>
+    <style>
+        body{
+            font-family: 'Quicksand', sans-serif;
+            background-color: #2b2c3f;
+        }
+        h1, h2, h3, h4, p, span {
+            color: white;
+        }
+        .title {
+            font-size: 60px;
+        }
+        a {
+            color: #9cffcd;
+            font-size: 20px
+        }
+        a:hover {
+            color: #9cffcd;
+        }
+        #button{
+            background-color: #47ffa3;
+            border-color: #47ffa3;
+        }
+    </style>
+
+    <title>{% block title %}Base{% endblock %}</title>
+
 </head>
-<body>
+<body style="background-color:#2b2c3f;">
 
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}

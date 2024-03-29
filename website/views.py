@@ -1,15 +1,15 @@
 from flask import render_template, Blueprint
 
-home = Blueprint('home', __name__)
+views = Blueprint('views', __name__)
 
-@home.route("/")
-def app_home():
-    return render_template('base.html')
+@views.route("/")
+def home():
+    return render_template('home.html')
 
-@home.route("/snake")
+@views.route("/snake")
 def snake():
     return render_template('snake.html')
 
-@home.route("/index")
+@views.route("/index")
 def index():
     return render_template('index.html')
