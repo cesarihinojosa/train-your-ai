@@ -16,11 +16,11 @@ let foodX;
 let foodY;
 let score = 0;
 let snake = [
-    { "x": unitSize * 4, "y": 0 },
-    { "x": unitSize * 3, "y": 0 },
-    { "x": unitSize * 2, "y": 0 },
-    { "x": unitSize, "y": 0 },
-    { "x": 0, "y": 0 }
+    { x: unitSize * 4, y: 0 },
+    { x: unitSize * 3, y: 0 },
+    { x: unitSize * 2, y: 0 },
+    { x: unitSize, y: 0 },
+    { x: 0, y: 0 }
 ];
 
 window.addEventListener("keydown", changeDirection);
@@ -68,13 +68,13 @@ function drawFood() {
 };
 function moveSnake() {
     const head = {
-        "x": snake[0]["x"] + xVelocity,
-        "y": snake[0]["y"] + yVelocity
+        x: snake[0].x + xVelocity,
+        y: snake[0].y + yVelocity
     };
 
     snake.unshift(head);
     //if food is eaten
-    if (snake[0]["x"] == foodX && snake[0]["y"] == foodY) {
+    if (snake[0].x == foodX && snake[0].y == foodY) {
         score += 1;
         scoreText.textContent = score;
         createFood();
@@ -87,8 +87,8 @@ function drawSnake() {
     ctx.fillStyle = snakeColor;
     ctx.strokeStyle = snakeBorder;
     snake.forEach(snakePart => {
-        ctx.fillRect(snakePart["x"], snakePart["y"], unitSize, unitSize);
-        ctx.strokeRect(snakePart["x"], snakePart["y"], unitSize, unitSize);
+        ctx.fillRect(snakePart.x, snakePart.y, unitSize, unitSize);
+        ctx.strokeRect(snakePart.x, snakePart.y, unitSize, unitSize);
     })
 };
 function changeDirection(event) {
@@ -124,30 +124,30 @@ function changeDirection(event) {
 };
 function checkGameOver() {
     switch (true) {
-        case (snake[0]["x"] < 0):
+        case (snake[0].x < 0):
             running = false;
             break;
-        case (snake[0]["x"] >= gameWidth):
+        case (snake[0].x >= gameWidth):
             running = false;
             break;
-        case (snake[0]["y"] < 0):
+        case (snake[0].y < 0):
             running = false;
             break;
-        case (snake[0]["y"] >= gameHeight):
+        case (snake[0].y >= gameHeight):
             running = false;
             break;
     }
     for (let i = 1; i < snake.length; i += 1) {
-        if (snake[i]["x"] == snake[0]["x"] && snake[i]["y"] == snake[0]["y"]) {
+        if (snake[i].x == snake[0].x && snake[i].y == snake[0].y) {
             running = false;
         }
     }
 };
 function displayGameOver() {
-    ctx.font = "50px MV Boli";
+    ctx.font = "20px Quicksand";
     ctx.fillStyle = "black";
     ctx.textAlign = "center";
-    ctx.fillText("GAME OVER!", gameWidth / 2, gameHeight / 2);
+    ctx.fillText("game over!", gameWidth / 2, gameHeight / 2);
     running = false;
 };
 function resetGame() {
@@ -155,11 +155,11 @@ function resetGame() {
     xVelocity = unitSize;
     yVelocity = 0;
     snake = [
-        { "x": unitSize * 4, "y": 0 },
-        { "x": unitSize * 3, "y": 0 },
-        { "x": unitSize * 2, "y": 0 },
-        { "x": unitSize, "y": 0 },
-        { "x": 0, "y": 0 }
+        { x: unitSize * 4, y: 0 },
+        { x: unitSize * 3, y: 0 },
+        { x: unitSize * 2, y: 0 },
+        { x: unitSize, y: 0 },
+        { x: 0, y: 0 }
     ];
     gameStart();
 };
