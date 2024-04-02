@@ -1,6 +1,7 @@
 const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#score");
+const gamesText = document.querySelector("#games")
 const highscoreText = document.querySelector("#highscore");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
@@ -16,12 +17,14 @@ let game_score = 0;
 let snake = [];
 let num_trainings = 0;
 let games = 0;
+let running = false;
 
 const socket = io();
 
 //triggers when train button is clicked, sends call to train event that begins training
 document.getElementById("btn-train").addEventListener("click", function () {
     if (games == 0 || games == 100) { //ensure no more than one round of training can happen
+        running = true;
         let food = document.getElementById("food").value;
         let alive = document.getElementById("alive").value;
         let die = document.getElementById("die").value;
@@ -77,4 +80,5 @@ function drawSnake() {
 function drawStats() {
     scoreText.textContent = score;
     highscoreText.textContent = game_score;
+    gamesText.textContent = games + "/100"
 }

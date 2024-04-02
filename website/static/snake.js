@@ -1,6 +1,8 @@
 const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
+const gameOverText = document.querySelector("#gameOver");
+const continueTag = document.querySelector("#continue")
 const resetBtn = document.querySelector("#resetBtn");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
@@ -8,9 +10,9 @@ const boardBackground = "white";
 const snakeColor = "lightgreen";
 const snakeBorder = "black";
 const foodColor = "red";
-const unitSize = 25;
+const unitSize = 20;
 let running = false;
-let xVelocity = 25;
+let xVelocity = unitSize;
 let yVelocity = 0;
 let speed = 100;
 let foodX;
@@ -25,7 +27,7 @@ let snake = [
 ];
 
 window.addEventListener("keydown", changeDirection);
-resetBtn.addEventListener("click", resetGame);
+
 
 gameStart();
 
@@ -146,24 +148,9 @@ function checkGameOver() {
     }
 };
 function displayGameOver() {
-    ctx.font = "20px Quicksand";
-    ctx.fillStyle = "black";
-    ctx.textAlign = "center";
-    ctx.fillText("game over!", gameWidth / 2, gameHeight / 2);
+    gameOverText.textContent = "game over. now train your ai to play.   "
+    continueTag.textContent = "continue"
     running = false;
-};
-function resetGame() {
-    score = 0;
-    xVelocity = unitSize;
-    yVelocity = 0;
-    snake = [
-        { x: unitSize * 4, y: 0 },
-        { x: unitSize * 3, y: 0 },
-        { x: unitSize * 2, y: 0 },
-        { x: unitSize, y: 0 },
-        { x: 0, y: 0 }
-    ];
-    gameStart();
 };
 
 function increaseSpeed() {

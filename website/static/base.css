@@ -7,6 +7,7 @@ h1,
 h2,
 h3,
 h4,
+h5,
 p,
 span {
     color: white;
@@ -53,4 +54,9 @@ label {
 select {
     width: 75px;
     height: 30px;
+}
+
+#gameOver {
+    font-size: 20px;
+    display: inline;
 }

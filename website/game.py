@@ -79,7 +79,7 @@ class SnakeGameAI:
         # 3. check if game over
         reward = self.stay_alive                           # REWARD FUNCTION IF IS ALIVE
         game_over = False
-        if self.is_collision() or self.frame_iteration > 100*len(self.snake): # if collision
+        if self.is_collision() or self.frame_iteration > 60*len(self.snake): # if collision
             game_over = True
             reward = self.die                     # REWARD FUNCTION IF DIES
             return reward, game_over, self.score
