@@ -1,4 +1,5 @@
 import functools
+from flask import flash, render_template
 from flask_login import current_user
 from flask_socketio import disconnect
 from .extensions import socketio
@@ -24,5 +25,8 @@ def handle_user_join(username):
 @socketio.on("train")
 @authenticated_only
 def handle_train(food, alive, die):
-    from .agent import start
-    start(food, alive, die)
+    if(food != "" and alive != "" and die != ""):
+        from .agent import start
+        start(food, alive, die)
+    else:
+        print("error")

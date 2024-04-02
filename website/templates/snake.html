@@ -16,7 +16,8 @@ href="{{ url_for('static', filename='snake.css')}}"
 <div id="gameContainer">
     <canvas id="gameBoard" width="640" height="480"></canvas>
     <p id="scoreText">0</p>
-    <button id="resetBtn">Reset</button>
+    <p id="gameOver"></p>
+    <a href="/snakeai" id="continue"></a>
 </div>
 <script src="{{url_for('static', filename='snake.js')}}"></script>
 {% endblock %}
