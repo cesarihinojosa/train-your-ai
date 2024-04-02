@@ -10,8 +10,9 @@ const snakeBorder = "black";
 const foodColor = "red";
 const unitSize = 25;
 let running = false;
-let xVelocity = unitSize;
+let xVelocity = 25;
 let yVelocity = 0;
+let speed = 100;
 let foodX;
 let foodY;
 let score = 0;
@@ -44,7 +45,7 @@ function nextTick() {
             drawSnake();
             checkGameOver();
             nextTick();
-        }, 75);
+        }, speed);
     }
     else {
         displayGameOver();
@@ -60,7 +61,7 @@ function createFood() {
         return randNum;
     }
     foodX = randomFood(0, gameWidth - unitSize);
-    foodY = randomFood(0, gameWidth - unitSize);
+    foodY = randomFood(0, gameHeight - unitSize);
 };
 function drawFood() {
     ctx.fillStyle = foodColor;
@@ -78,6 +79,7 @@ function moveSnake() {
         score += 1;
         scoreText.textContent = score;
         createFood();
+        increaseSpeed();
     }
     else {
         snake.pop();
@@ -163,3 +165,7 @@ function resetGame() {
     ];
     gameStart();
 };
+
+function increaseSpeed() {
+    speed -= 10;
+}
