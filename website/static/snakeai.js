@@ -1,6 +1,7 @@
 const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
-const scoreText = document.querySelector("#scoreText");
+const scoreText = document.querySelector("#score");
+const highscoreText = document.querySelector("#highscore");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
 const boardBackground = "white";
@@ -11,6 +12,7 @@ const unitSize = 20;
 let foodX;
 let foodY;
 let score = 0;
+let game_score = 0;
 let snake = [];
 let num_trainings = 0;
 let games = 0;
@@ -35,9 +37,22 @@ socket.on("snake_data", function (data) {
     snake = data["data"]["snake"];
     games = data["data"]["stats"]["games"];
     score = data["data"]["stats"]["score"];
+    game_score = data["data"]["stats"]["record"];
     drawFood();
     drawSnake();
     drawStats();
+})
+
+socket.on("highscore_data", function (data) {
+    let ul = document.getElementById("highscores");
+    for (let i = 1; i < data["data"]["ais"].length; i++) {
+        let li = document.createElement("li");
+        li.innerHTML = `<li class="list-group-item">
+                            <div class="highscore">`+ data["data"]["ais"][i]["highscore"] + `</div>
+                            <div class="hide">gets food: 5, stays alive: 0, dies: -5</div>
+                        </li>`;
+        ul.appendChild(li);
+    }
 })
 
 function clearBoard() {
@@ -61,11 +76,5 @@ function drawSnake() {
 
 function drawStats() {
     scoreText.textContent = score;
+    highscoreText.textContent = game_score;
 }
-
-function displayGameOver() {
-    ctx.font = "50px MV Boli";
-    ctx.fillStyle = "black";
-    ctx.textAlign = "center";
-    ctx.fillText("GAME OVER!", gameWidth / 2, gameHeight / 2);
-};

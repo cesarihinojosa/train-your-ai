@@ -4,6 +4,8 @@ document.getElementById("join-btn").addEventListener("click", function () {
     let username = document.getElementById("username").value;
     socket.connect();
 
+    document.cre
+
     socket.on("connect", function () {
         socket.emit("user_join", username);
     })

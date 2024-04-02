@@ -1,40 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='style.css')}}"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
-  </head>
-  <body>
-    <div id="gameContainer">
-      <canvas id="gameBoard" width="640" height="480"></canvas>
-      <div id="scoreText">0</div>
-      <button id="resetBtn">Reset</button>
-    </div>
+{% extends 'base.html' %}
 
-    <div>
-      <ul id="ul-snake-data">
-      </ul>
-    </div>
+{% block title %}
+    Home
+{% endblock %}
 
-    <div>
-      <input type="text" id="food" placeholder="food">
-      <input type="text" id="alive" placeholder="alive">
-      <input type="text" id="die" placeholder="die">
-      <button id="btn-train">train</button>
-    </div>
+{% block head %}
+<link
+rel="stylesheet"
+href="{{ url_for('static', filename='snake.css')}}"
+/>
+{% endblock %}
 
-    <div>
-      <input type="text" id="username" placeholder="username">
-      <button id="join-btn">connect</button>
-    </div>
-
-    <script src="{{url_for('static', filename='snakeai.js')}}"></script>
-  </body>
-</html>
+{% block container %}
+<div class="mt-5"></div>
+<div id="gameContainer">
+    <canvas id="gameBoard" width="500" height="500"></canvas>
+    <p id="scoreText">0</p>
+    <button id="resetBtn">Reset</button>
+</div>
+<script src="{{url_for('static', filename='snake.js')}}"></script>
+{% endblock %}

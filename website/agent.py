@@ -8,6 +8,10 @@ from .model import Linear_QNet, QTrainer
 from .dbmodels import AI
 from . import db
 import time
+from .events import socketio
+from flask_socketio import emit
+from flask_login import current_user
+from flask import request
 
 MAX_MEMORY = 100_000
 BATCH_SIZE = 1000
@@ -146,6 +150,14 @@ def log_to_db(high_score, avg_score, eat, alive, die, user_id):
     db.session.add(ai)
     db.session.commit()
 
+def send_high_scores():
+    data = {}
+    data["ais"] = []
+    for ai in current_user.ais:
+        data["ais"].append({"highscore": ai.high_score, "eat": ai.eat, "alive": ai.alive, "die": ai.die})
+    socketio.emit("highscore_data", {"data": data}, to=request.sid)
+    print(data)
+
 def start(eat, alive, die):
     print()
     print("-------TRAINING BEGIN-------")
@@ -153,6 +165,7 @@ def start(eat, alive, die):
 
     num_games, high_score, avg_score = train(int(eat), int(alive), int(die))
     log_to_db(high_score, avg_score, eat, alive, die, current_user.id)
+    send_high_scores()
 
     print(f"TOTAL GAMES: {num_games}")
     print(f"HIGH SCORE:  {high_score}")
