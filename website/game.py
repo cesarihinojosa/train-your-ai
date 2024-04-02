@@ -131,8 +131,7 @@ class SnakeGameAI:
             print(f"DATA INCONSISTENT")
             print(f"APPLE: x: {self.food.x}, y: {self.food.y}")
             print(f"JSON DATA: x: {data['apple']['x']}, y: {data['apple']['y']}")
-
-        print(data)
+            
         send_data(data)
 
     def _move(self, action):
