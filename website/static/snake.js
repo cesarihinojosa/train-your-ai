@@ -1,8 +1,7 @@
 const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#scoreText");
-const gameOverText = document.querySelector("#gameOver");
-const continueTag = document.querySelector("#continue")
+const gameText = document.querySelector("#gameText");
 const resetBtn = document.querySelector("#resetBtn");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
@@ -14,7 +13,6 @@ const unitSize = 20;
 let running = false;
 let xVelocity = unitSize;
 let yVelocity = 0;
-let speed = 100;
 let foodX;
 let foodY;
 let score = 0;
@@ -25,15 +23,15 @@ let snake = [
     { x: unitSize, y: 0 },
     { x: 0, y: 0 }
 ];
+let games = 0;
 
 window.addEventListener("keydown", changeDirection);
+resetBtn.addEventListener("click", resetGame);
 
-
-gameStart();
 
 function gameStart() {
     running = true;
-    scoreText.textContent = score;
+    scoreText.textContent = "SCORE: " + score;
     createFood();
     drawFood();
     nextTick();
@@ -47,7 +45,7 @@ function nextTick() {
             drawSnake();
             checkGameOver();
             nextTick();
-        }, speed);
+        }, 75);
     }
     else {
         displayGameOver();
@@ -79,9 +77,8 @@ function moveSnake() {
     //if food is eaten
     if (snake[0].x == foodX && snake[0].y == foodY) {
         score += 1;
-        scoreText.textContent = score;
+        scoreText.textContent = "SCORE: " + score;
         createFood();
-        increaseSpeed();
     }
     else {
         snake.pop();
@@ -147,12 +144,26 @@ function checkGameOver() {
         }
     }
 };
+
 function displayGameOver() {
-    gameOverText.textContent = "game over. now train your ai to play.   "
-    continueTag.textContent = "continue"
+    ctx.font = "35px Quicksand";
+    ctx.fillStyle = "black";
+    ctx.textAlign = "center";
+    ctx.fillText("game over", gameWidth / 2, gameHeight / 2);
     running = false;
 };
-
-function increaseSpeed() {
-    speed -= 10;
-}
+function resetGame() {
+    score = 0;
+    xVelocity = unitSize;
+    yVelocity = 0;
+    snake = [
+        { x: unitSize * 4, y: 0 },
+        { x: unitSize * 3, y: 0 },
+        { x: unitSize * 2, y: 0 },
+        { x: unitSize, y: 0 },
+        { x: 0, y: 0 }
+    ];
+    games++;
+    gameText.textContent = "GAMES: " + games;
+    gameStart();
+};

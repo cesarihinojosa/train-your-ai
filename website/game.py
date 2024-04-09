@@ -1,6 +1,7 @@
 import pygame
 import random
 import numpy as np
+import sys
 from enum import Enum
 from collections import namedtuple
 from .events import socketio
@@ -31,6 +32,10 @@ SPEED = 1000
 #publisher of training data
 def send_data(data):
     socketio.emit("snake_data", {"data": data}, to=request.sid)
+
+@socketio.on("off")
+def handle_connect():
+    sys.exit()
 
 class SnakeGameAI:
 

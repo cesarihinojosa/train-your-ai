@@ -32,6 +32,10 @@ document.getElementById("btn-train").addEventListener("click", function () {
     }
 })
 
+document.getElementById("btn-off").addEventListener("click", function () {
+    running = false;
+})
+
 //subscriber to training data
 socket.on("snake_data", function (data) {
     clearBoard();
@@ -43,7 +47,10 @@ socket.on("snake_data", function (data) {
     game_score = data["data"]["stats"]["record"];
     drawFood();
     drawSnake();
-    drawStats();
+    //drawStats();
+    if (!running) {
+        socket.emit("off")
+    }
 })
 
 socket.on("highscore_data", function (data) {
