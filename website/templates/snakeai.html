@@ -13,128 +13,51 @@
 {% endblock %}
 
 {% block container %}
-  <div class="mt-5"></div>
-    <div class="container text-center">
-      <div class="row">
 
-        <div class="col" id="gameContainer">
-          <canvas id="gameBoard" width="640" height="480"></canvas>
-        </div>
+  <div class="mx-auto mt-3" style="width: 800px;">
 
-        <div class="col">
-
-          <div class="row">
-            <div style="width: 140px;">
-              <p class="text-left">snake gets food</p>
-            </div>
-            <select name="food" id="food">
-              <option value="" selected disabled hidden>select</option>
-              <option value="-5">-5</option>
-              <option value="-4">-4</option>
-              <option value="-3">-3</option>
-              <option value="-2">-2</option>
-              <option value="-1">-1</option>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>   
-          </div>
-
-          <br>
-
-          <div class="row">
-            <div style="width: 140px;">
-              <p class="text-left">snake stays alive</p>
-            </div>
-            <select name="alive" id="alive">
-              <option value="" selected disabled hidden>select</option>
-              <option value="-5">-5</option>
-              <option value="-4">-4</option>
-              <option value="-3">-3</option>
-              <option value="-2">-2</option>
-              <option value="-1">-1</option>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>   
-          </div>   
-
-          <br>
-
-          <div class="row">
-            <div style="width: 140px;">
-              <p class="text-left">snake dies</p>
-            </div>
-            <select name="die" id="die">
-              <option value="" selected disabled hidden>select</option>
-              <option value="-5">-5</option>
-              <option value="-4">-4</option>
-              <option value="-3">-3</option>
-              <option value="-2">-2</option>
-              <option value="-1">-1</option>
-              <option value="0">0</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-            </select>
-          </div>
-
-          <br>
-
-          <div class="row">
-            <div style="width: 140px;"></div>
-            <button class="btn btn-primary" id="btn-train">train</button>
-          </div>  
-
-          <br>
-          <br>
-          <br>
-          <br>
-          
-          <div class="row"> 
-            <div style="width: 140px;">
-              <p class="text-left">games</p>
-            </div>
-            <p id="games">0/100</p>
-          </div>
-
-          <div class="row"> 
-            <div style="width: 140px;">
-              <p class="text-left">score</p>
-            </div>
-            <p id="score">0</p>
-          </div>
-
-          <div class="row"> 
-            <div style="width: 140px;">
-              <p class="text-left">high score</p>
-            </div>
-            <p id="highscore">0</p>
-          </div>
-
-          <div class="row"> 
-            <div style="width: 140px;">
-              <p class="text-left">goal(try to beat this)</p>
-            </div>
-            <p id="goal">45</p>
-          </div>
-
-        </div>
-
-        <div class="col">
-          <img class="rounded" style="max-width: 120px; max-height: 500px" src="{{url_for('static', filename='scale.jpeg')}}" alt="">
-        </div>
-
-      </div>
+    <div class="col" id="gameContainer">
+      <canvas id="gameBoard" width="640" height="480"></canvas>
     </div>
+
+    <br>
+<div align="center">
+    <h5 align="center">when the snake gets a point, I want to
+      <select style="width: 200px" name="food" id="food">
+        <option selected="selected"></option>
+        <option value="10">reward it</option>
+        <option value="0">leave it alone</option>
+        <option value="-10">punish it</option>
+      </select>
+    </h5>
+    <br>
+    <h5 align="center">when the snake stays alive, I want to
+      <select style="width: 200px" name="alive" id="alive">
+        <option selected="selected"></option>
+        <option value="10">reward it</option>
+        <option value="0">leave it alone</option>
+        <option value="-10">punish it</option>
+      </select>
+    </h5>
+    <br>
+    <h5 align="center">when the snake dies, I want to
+      <select style="width: 200px" name="die" id="die">
+        <option selected="selected"></option>
+        <option value="10">reward it</option>
+        <option value="0">leave it alone</option>
+        <option value="-10">punish it</option>
+      </select>
+    </h5>
+    <br>
+
+    <div align="center">
+      <div style="width: 240px;"></div>
+      <button style="width: 240px;" class="btn btn-primary" id="btn-train">train and see results</button>
+    </div>  
+  </div>
+
+    
+  </div>
     
     <script src="{{url_for('static', filename='snakeai.js')}}"></script>
 {% endblock %}
