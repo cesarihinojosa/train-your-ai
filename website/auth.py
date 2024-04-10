@@ -9,9 +9,10 @@ auth = Blueprint('auth', __name__)
 def signin():
     if request.method == 'POST':
         first_name = request.form.get('first-name')
+        last_name = request.form.get('last-name')
         grade_level = request.form.get('grade-level')
-        if valid_input(first_name, grade_level):
-            new_user = User(first_name=first_name, grade_level=grade_level)
+        if valid_input(first_name, grade_level, last_name):
+            new_user = User(first_name=first_name, last_name=last_name, grade_level=grade_level)
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user, remember=False)
@@ -23,7 +24,7 @@ def logout():
     logout_user()
     return redirect(url_for("auth.signin"))
 
-def valid_input(first_name, grade_level):
+def valid_input(first_name, grade_level, last_name):
     if len(first_name) < 2:
         flash("first name must be greater than 1 character", category="error")
         return False
@@ -33,5 +34,7 @@ def valid_input(first_name, grade_level):
     if grade_level == "0":
         flash("grade level can't be empty", category="error")
         return False
-    else:
-        return True
+    if len(last_name) < 1:
+        flash("last initial can't be empty", category="error")
+        return False
+    return True
