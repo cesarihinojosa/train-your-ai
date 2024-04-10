@@ -18,11 +18,6 @@ def signin():
             return redirect(url_for("views.intro"))
     return render_template("signin.html")
 
-#not being used at the moment
-@auth.route("login", methods=['GET', 'POST'])
-def login():
-    return render_template("login.html")
-
 @auth.route("logout")
 def logout():
     logout_user()
@@ -32,7 +27,10 @@ def valid_input(first_name, grade_level):
     if len(first_name) < 2:
         flash("first name must be greater than 1 character", category="error")
         return False
-    elif len(grade_level) == 0:
+    if len(grade_level) == 0:
+        flash("grade level can't be empty", category="error")
+        return False
+    if grade_level == "0":
         flash("grade level can't be empty", category="error")
         return False
     else:

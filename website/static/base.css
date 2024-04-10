@@ -73,3 +73,10 @@ select {
     font-size: 20px;
     display: inline;
 }
+
+#grade-level,
+#die,
+#alive,
+#food {
+    border-radius: 4%;
+}
