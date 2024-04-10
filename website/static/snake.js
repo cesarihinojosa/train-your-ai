@@ -24,6 +24,13 @@ let snake = [
     { x: 0, y: 0 }
 ];
 let games = 0;
+let speed = 180;
+
+ctx.font = "35px Quicksand";
+ctx.fillStyle = "black";
+ctx.textAlign = "center";
+ctx.fillText("press play", gameWidth / 2, gameHeight / 2);
+ctx.fillText("arrow keys to play", gameWidth / 2, gameHeight / 3);
 
 window.addEventListener("keydown", changeDirection);
 resetBtn.addEventListener("click", resetGame);
@@ -45,7 +52,7 @@ function nextTick() {
             drawSnake();
             checkGameOver();
             nextTick();
-        }, 75);
+        }, speed);
     }
     else {
         displayGameOver();
@@ -78,6 +85,7 @@ function moveSnake() {
     if (snake[0].x == foodX && snake[0].y == foodY) {
         score += 1;
         scoreText.textContent = "SCORE: " + score;
+        speedUp()
         createFood();
     }
     else {
@@ -165,5 +173,10 @@ function resetGame() {
     ];
     games++;
     gameText.textContent = "GAMES: " + games;
+    speed = 180;
     gameStart();
 };
+
+function speedUp() {
+    speed -= 20
+}
