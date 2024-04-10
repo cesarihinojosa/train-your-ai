@@ -23,17 +23,20 @@ const socket = io();
 
 //triggers when train button is clicked, sends call to train event that begins training
 document.getElementById("btn-train").addEventListener("click", function () {
-    if (games == 0 || games == 100) { //ensure no more than one round of training can happen
-        running = true;
-        let food = document.getElementById("food").value;
-        let alive = document.getElementById("alive").value;
-        let die = document.getElementById("die").value;
-        socket.emit("train", food, alive, die);
-    }
+    running = true;
+    let food = document.getElementById("food").value;
+    let alive = document.getElementById("alive").value;
+    let die = document.getElementById("die").value;
+    socket.emit("train", food, alive, die);
+
+})
+
+document.getElementById("btn-off").addEventListener("click", function () {
+    running = false;
 })
 
 //subscriber to training data
-socket.on("snake_data", function (data) {
+socket.on("snake_data", function (data, callback) {
     clearBoard();
     foodX = data["data"]["apple"]["x"];
     foodY = data["data"]["apple"]["y"];
@@ -43,7 +46,15 @@ socket.on("snake_data", function (data) {
     game_score = data["data"]["stats"]["record"];
     drawFood();
     drawSnake();
-    drawStats();
+    console.log("running: " + running)
+    if (running) {
+        return callback(true)
+    }
+    else {
+        games = 0
+        clearBoard();
+        return callback(false)
+    }
 })
 
 socket.on("highscore_data", function (data) {

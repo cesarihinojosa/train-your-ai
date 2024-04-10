@@ -26,9 +26,13 @@ a:hover {
     color: #9cffcd;
 }
 
-#button {
+#button,
+#resetBtn,
+#btn-off {
     background-color: #47ffa3;
     border-color: #47ffa3;
+    color: #2b2c3f;
+    width: 100px;
 }
 
 .hide {
@@ -48,7 +52,7 @@ label {
     background-color: #47ffa3;
     border-color: #47ffa3;
     width: 75px;
-    color: white;
+    color: #2b2c3f;
 }
 
 select {
