@@ -13,6 +13,11 @@ span {
     color: white;
 }
 
+#mint,
+#goal {
+    color: #47ffa3;
+}
+
 .title {
     font-size: 60px;
 }
@@ -32,7 +37,9 @@ a:hover {
     background-color: #47ffa3;
     border-color: #47ffa3;
     color: #2b2c3f;
-    width: 100px;
+    width: 130px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .hide {
@@ -51,8 +58,10 @@ label {
 #btn-train {
     background-color: #47ffa3;
     border-color: #47ffa3;
-    width: 75px;
     color: #2b2c3f;
+    width: 130px;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 select {

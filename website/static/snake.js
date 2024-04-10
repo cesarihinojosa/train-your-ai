@@ -25,6 +25,12 @@ let snake = [
 ];
 let games = 0;
 
+ctx.font = "35px Quicksand";
+ctx.fillStyle = "black";
+ctx.textAlign = "center";
+ctx.fillText("press play", gameWidth / 2, gameHeight / 2);
+ctx.fillText("arrow keys to play", gameWidth / 2, gameHeight / 3);
+
 window.addEventListener("keydown", changeDirection);
 resetBtn.addEventListener("click", resetGame);
 

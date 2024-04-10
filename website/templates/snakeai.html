@@ -14,53 +14,124 @@
 
 {% block container %}
 
-  <div class="mx-auto mt-3" style="width: 800px;">
+  <div class="mx-auto mt-3" style="width: 1000px;">
 
-    <div class="col" id="gameContainer">
-      <canvas id="gameBoard" width="640" height="480"></canvas>
+    <div class="row">
+
+      <div class="col align-self-start" id="hideme">
+
+          <br>
+          <br>
+          <br>
+
+        <div class="row"> 
+          <div style="width: 200px;">
+            <h5 class="text-left">score</h5>
+          </div>
+          <h5 id="score">0</h5>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row"> 
+          <div style="width: 200px;">
+            <h5 class="text-left">your high score: </h5>
+          </div>
+          <h5 id="highscore">0</h5>
+        </div>
+
+        <br>
+        <br>
+
+
+        <div class="row"> 
+          <div style="width: 200px;">
+            <h5 class="text-left">games: </h5>
+          </div>
+          <h5 id="games">0/100</h5>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row"> 
+          <div style="width: 200px;">
+            <h5 class="text-left" id="mint">highscore</h5>
+          </div>
+          <h5 id="goal">0/100</h5>
+        </div>
+
+        <br>
+        <br>
+
+        <div class="row"> 
+          <h5 id="mint">notice how the AI(snake) behaves differently based off how you trained it...</h5>
+        </div>
+
+        <br>
+        <br>
+
+
+      </div>
+
+
+
+          <div class="col align-self-center" id="gameContainer">
+            <canvas id="gameBoard" width="640" height="480"></canvas>
+            <div class="col">
+              <br>
+          <div align="center">
+              <h5 align="center">when the snake gets a point, I want to
+                <select style="width: 200px" name="food" id="food">
+                  <option selected="selected"></option>
+                  <option value="10">reward it</option>
+                  <option value="0">leave it alone</option>
+                  <option value="-10">punish it</option>
+                </select>
+              </h5>
+              <br>
+              <h5 align="center">when the snake stays alive, I want to
+                <select style="width: 200px" name="alive" id="alive">
+                  <option selected="selected"></option>
+                  <option value="10">reward it</option>
+                  <option value="0">leave it alone</option>
+                  <option value="-10">punish it</option>
+                </select>
+              </h5>
+              <br>
+              <h5 align="center">when the snake dies, I want to
+                <select style="width: 200px" name="die" id="die">
+                  <option selected="selected"></option>
+                  <option value="10">reward it</option>
+                  <option value="0">leave it alone</option>
+                  <option value="-10">punish it</option>
+                </select>
+              </h5>
+              <br>
+
+              <div class="mr-5" align="left" style="width: 240px; display: inline;">
+                <button style="width: 240px;" class="btn btn-primary" id="btn-train">train and see results</button>
+              </div>  
+
+
+              <div class="ml-5" align="right" style="display: inline;">
+              <button style="width: 240px; display: inline;" class="btn btn-primary" id="btn-off">stop training</button>
+            </div>
     </div>
 
-    <br>
-<div align="center">
-    <h5 align="center">when the snake gets a point, I want to
-      <select style="width: 200px" name="food" id="food">
-        <option selected="selected"></option>
-        <option value="10">reward it</option>
-        <option value="0">leave it alone</option>
-        <option value="-10">punish it</option>
-      </select>
-    </h5>
-    <br>
-    <h5 align="center">when the snake stays alive, I want to
-      <select style="width: 200px" name="alive" id="alive">
-        <option selected="selected"></option>
-        <option value="10">reward it</option>
-        <option value="0">leave it alone</option>
-        <option value="-10">punish it</option>
-      </select>
-    </h5>
-    <br>
-    <h5 align="center">when the snake dies, I want to
-      <select style="width: 200px" name="die" id="die">
-        <option selected="selected"></option>
-        <option value="10">reward it</option>
-        <option value="0">leave it alone</option>
-        <option value="-10">punish it</option>
-      </select>
-    </h5>
-    <br>
+          </div>
 
-    <div style="width: 240px; display: inline;" align="center">
-      <button style="width: 240px;" class="btn btn-primary" id="btn-train">train and see results</button>
-    </div>  
+        </div>
 
-    <div style="display: inline;">
-    <button style="width: 240px; display: inline;" class="btn btn-primary" id="btn-off">stop training</button>
-  </div>
- 
-  </div>
+        <div class="row align-items-end">
 
     
+
+          
+        </div>
+
+    </div>
   </div>
     
     <script src="{{url_for('static', filename='snakeai.js')}}"></script>

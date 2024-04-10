@@ -2,6 +2,7 @@ const gameBoard = document.querySelector("#gameBoard");
 const ctx = gameBoard.getContext("2d");
 const scoreText = document.querySelector("#score");
 const gamesText = document.querySelector("#games")
+const hidemeDiv = document.getElementById("hideme")
 const highscoreText = document.querySelector("#highscore");
 const gameWidth = gameBoard.width;
 const gameHeight = gameBoard.height;
@@ -21,19 +22,46 @@ let running = false;
 
 const socket = io();
 
+ctx.font = "35px Quicksand";
+ctx.fillStyle = "black";
+ctx.textAlign = "center";
+ctx.fillText("training arena", gameWidth / 2, gameHeight / 2);
+
+hidemeDiv.style.display = "none";
 //triggers when train button is clicked, sends call to train event that begins training
 document.getElementById("btn-train").addEventListener("click", function () {
-    running = true;
-    let food = document.getElementById("food").value;
-    let alive = document.getElementById("alive").value;
-    let die = document.getElementById("die").value;
-    socket.emit("train", food, alive, die);
+    if (!running) {
+        running = true;
+        let food = document.getElementById("food").value;
+        let alive = document.getElementById("alive").value;
+        let die = document.getElementById("die").value;
+        if (food == "" || alive == "" || die == "") {
+            running = false;
+        }
+        else {
+            socket.emit("train", food, alive, die);
+            hidemeDiv.style.display = "block";
+        }
+    }
 
 })
 
 document.getElementById("btn-off").addEventListener("click", function () {
     running = false;
 })
+
+function updateRunning() {
+    if (games > 98) {
+        running = false;
+        ctx.font = "35px Quicksand";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("training concluded", gameWidth / 2, gameHeight / 2);
+    }
+    else {
+        running = true;
+    }
+}
 
 //subscriber to training data
 socket.on("snake_data", function (data, callback) {
@@ -46,27 +74,20 @@ socket.on("snake_data", function (data, callback) {
     game_score = data["data"]["stats"]["record"];
     drawFood();
     drawSnake();
+    drawStats();
     console.log("running: " + running)
     if (running) {
-        return callback(true)
     }
     else {
         games = 0
         clearBoard();
+        ctx.font = "35px Quicksand";
+        ctx.fillStyle = "black";
+        ctx.textAlign = "center";
+        ctx.fillText("training concluded", gameWidth / 2, gameHeight / 2);
         return callback(false)
     }
-})
-
-socket.on("highscore_data", function (data) {
-    let ul = document.getElementById("highscores");
-    for (let i = 1; i < data["data"]["ais"].length; i++) {
-        let li = document.createElement("li");
-        li.innerHTML = `<li class="list-group-item">
-                            <div class="highscore">`+ data["data"]["ais"][i]["highscore"] + `</div>
-                            <div class="hide">gets food: 5, stays alive: 0, dies: -5</div>
-                        </li>`;
-        ul.appendChild(li);
-    }
+    updateRunning();
 })
 
 function clearBoard() {
@@ -91,5 +112,10 @@ function drawSnake() {
 function drawStats() {
     scoreText.textContent = score;
     highscoreText.textContent = game_score;
-    gamesText.textContent = games + "/100"
+    if (games == 1000) {
+        gamesText.textContent = "0/100"
+    }
+    else {
+        gamesText.textContent = games + "/100"
+    }
 }
