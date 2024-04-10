@@ -1,6 +1,7 @@
 import torch
 import random
 import numpy as np
+import sys
 from collections import deque
 from flask_login import current_user
 from .game import SnakeGameAI, Direction, Point, BLOCK_SIZE
@@ -120,9 +121,9 @@ def train(eat_apple, stay_alive, die):
         final_move = agent.get_action(state_old)
 
         # perform move and get new state
-        reward, done, score = game.play_step(final_move, agent.n_games, total_score, record, score)
+        reward, done, score, games = game.play_step(final_move, agent.n_games, total_score, record, score)
         state_new = agent.get_state(game)
-
+        agent.n_games = games
         # train short memory
         agent.train_short_memory(state_old, final_move, reward, state_new, done)
 
@@ -150,13 +151,13 @@ def log_to_db(high_score, avg_score, eat, alive, die, user_id):
     db.session.add(ai)
     db.session.commit()
 
-def send_high_scores():
-    data = {}
-    data["ais"] = []
-    for ai in current_user.ais:
-        data["ais"].append({"highscore": ai.high_score, "eat": ai.eat, "alive": ai.alive, "die": ai.die})
-    socketio.emit("highscore_data", {"data": data}, to=request.sid)
-    print(data)
+# def send_high_scores():
+#     data = {}
+#     data["ais"] = []
+#     for ai in current_user.ais:
+#         data["ais"].append({"highscore": ai.high_score, "eat": ai.eat, "alive": ai.alive, "die": ai.die})
+#     socketio.emit("highscore_data", {"data": data}, to=request.sid)
+#     print(data)
 
 def start(eat, alive, die):
     print()
@@ -165,7 +166,7 @@ def start(eat, alive, die):
 
     num_games, high_score, avg_score = train(int(eat), int(alive), int(die))
     log_to_db(high_score, avg_score, eat, alive, die, current_user.id)
-    send_high_scores()
+    #send_high_scores()
 
     print(f"TOTAL GAMES: {num_games}")
     print(f"HIGH SCORE:  {high_score}")
@@ -173,6 +174,8 @@ def start(eat, alive, die):
     print("TOTAL TRAINING TIME: %s" % (time.time() - start_time))
     print("-------TRAINING COMPLETE-------")
     print()
+
+
 
 if __name__ == '__main__':
     start()
