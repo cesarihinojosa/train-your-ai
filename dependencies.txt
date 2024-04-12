@@ -5,3 +5,5 @@ pygame
 numpy
 flask_socketio
 flask_sqlalchemy
+gunicorn
+eventlet
