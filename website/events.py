@@ -8,7 +8,7 @@ def authenticated_only(f):
     @functools.wraps(f)
     def wrapped(*args, **kwargs):
         if not current_user.is_authenticated:
-            disconnect()
+            disconnect(current_user)
         else:
             return f(*args, **kwargs)
     return wrapped

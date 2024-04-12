@@ -46,12 +46,8 @@ document.getElementById("btn-train").addEventListener("click", function () {
 
 })
 
-document.getElementById("btn-off").addEventListener("click", function () {
-    running = false;
-})
-
 function updateRunning() {
-    if (games > 98) {
+    if (games > 99) {
         running = false;
         ctx.font = "35px Quicksand";
         ctx.fillStyle = "black";
@@ -64,7 +60,7 @@ function updateRunning() {
 }
 
 //subscriber to training data
-socket.on("snake_data", function (data, callback) {
+socket.on("snake_data", function (data) {
     clearBoard();
     foodX = data["data"]["apple"]["x"];
     foodY = data["data"]["apple"]["y"];
@@ -76,17 +72,6 @@ socket.on("snake_data", function (data, callback) {
     drawSnake();
     drawStats();
     console.log("running: " + running)
-    if (running) {
-    }
-    else {
-        games = 0
-        clearBoard();
-        ctx.font = "35px Quicksand";
-        ctx.fillStyle = "black";
-        ctx.textAlign = "center";
-        ctx.fillText("training concluded", gameWidth / 2, gameHeight / 2);
-        return callback(false)
-    }
     updateRunning();
 })
 
