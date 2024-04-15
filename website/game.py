@@ -28,7 +28,7 @@ BLUE2 = (0, 100, 255)
 BLACK = (0,0,0)
 
 BLOCK_SIZE = 20
-SPEED = 1000
+SPEED = 500
 
 #publisher of training data
 def send_data(data):
