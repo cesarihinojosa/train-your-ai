@@ -9,7 +9,13 @@
 ### Running Instructions
 
 #### Linux: 
-##### clone the repository
-##### create a python virtual environment inside the project directory:
-#####  $ python -m venv venv
-#### Windows: Th
+##### - clone the repository
+##### - create a python virtual environment inside the project directory: $ python -m venv venv
+##### - $ pip install -r dependencies.txt
+##### - run the app: $ python main.py      
+#### Windows:
+##### - clone the repository
+##### - create a python virtual environment inside the project directory: $ python -m venv venv
+##### - $ pip install -r dependencies.txt
+##### - add "allow_unsafe_werkzeug=True" to run() inside main.py
+##### - install aka.ms/vs/16/release/vc_redist.x64.exe (type url into web browser to install)
