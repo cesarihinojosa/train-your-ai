@@ -1,9 +1,7 @@
 flask
 flask_login
-torch
 pygame
 numpy
 flask_socketio
 flask_sqlalchemy
-gunicorn
-eventlet
+torch
