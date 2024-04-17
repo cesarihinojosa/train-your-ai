@@ -140,8 +140,6 @@ def train(eat_apple, stay_alive, die):
                 agent.model.save()
             total_score += score
 
-            print('Game', agent.n_games, 'Score', score, 'Record:', record)
-
     mean_score = total_score / agent.n_games
     return agent.n_games, record, mean_score
 
@@ -159,22 +157,9 @@ def log_to_db(high_score, avg_score, eat, alive, die, user_id):
 #     print(data)
 
 def start(eat, alive, die):
-    print()
-    print("-------TRAINING BEGIN-------")
-    start_time = time.time()
 
     num_games, high_score, avg_score = train(int(eat), int(alive), int(die))
     log_to_db(high_score, avg_score, eat, alive, die, current_user.id)
-    #send_high_scores()
-
-    print(f"TOTAL GAMES: {num_games}")
-    print(f"HIGH SCORE:  {high_score}")
-    print(f"AVERAGE SCORE {avg_score}")
-    print("TOTAL TRAINING TIME: %s" % (time.time() - start_time))
-    print("-------TRAINING COMPLETE-------")
-    print()
-
-
 
 if __name__ == '__main__':
     start()
