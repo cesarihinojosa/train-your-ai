@@ -19,3 +19,4 @@
 ##### - $ pip install -r dependencies.txt
 ##### - add "allow_unsafe_werkzeug=True" to run() inside main.py
 ##### - install aka.ms/vs/16/release/vc_redist.x64.exe (type url into web browser to install)
+##### - run the app: $ python main.py
