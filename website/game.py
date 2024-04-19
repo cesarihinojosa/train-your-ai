@@ -39,7 +39,7 @@ def acknowledgment(running):
     if (not running):
         global GAMES
         GAMES = 1000
-        time.sleep(1)
+        time.sleep(0.3)
         GAMES = 0
 
 class SnakeGameAI:
