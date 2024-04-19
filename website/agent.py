@@ -121,8 +121,9 @@ def train(eat_apple, stay_alive, die):
         final_move = agent.get_action(state_old)
 
         # perform move and get new state
-        reward, done, score = game.play_step(final_move, agent.n_games, total_score, record, score)
+        reward, done, score, games = game.play_step(final_move, agent.n_games, total_score, record, score)
         state_new = agent.get_state(game)
+        agent.n_games = games
         # train short memory
         agent.train_short_memory(state_old, final_move, reward, state_new, done)
 
@@ -139,6 +140,8 @@ def train(eat_apple, stay_alive, die):
                 record = score
                 agent.model.save()
             total_score += score
+
+            print('Game', agent.n_games, 'Score', score, 'Record:', record)
 
     mean_score = total_score / agent.n_games
     return agent.n_games, record, mean_score
