@@ -28,11 +28,19 @@ BLUE2 = (0, 100, 255)
 BLACK = (0,0,0)
 
 BLOCK_SIZE = 20
-SPEED = 500
+SPEED = 1000
+GAMES = 0
 
 #publisher of training data
 def send_data(data):
-    socketio.emit("snake_data", {"data": data}, to=request.sid)
+    socketio.emit("snake_data", {"data": data}, to=request.sid, callback=acknowledgment)
+
+def acknowledgment(running):
+    if (not running):
+        global GAMES
+        GAMES = 1000
+        time.sleep(0.3)
+        GAMES = 0
 
 class SnakeGameAI:
 
@@ -67,6 +75,10 @@ class SnakeGameAI:
             self._place_food()
 
     def play_step(self, action, games, total_score, record, score):
+        global GAMES
+        if (GAMES == 1000):
+            games = 1000
+            GAMES = 0
 
         self.frame_iteration += 1
         # 1. collect user input
@@ -85,7 +97,7 @@ class SnakeGameAI:
         if self.is_collision() or self.frame_iteration > 60*len(self.snake): # if collision
             game_over = True
             reward = self.die                     # REWARD FUNCTION IF DIES
-            return reward, game_over, self.score
+            return reward, game_over, self.score, games
 
         # 4. place new food or just move
         if self.head == self.food: # if eats food
@@ -99,7 +111,7 @@ class SnakeGameAI:
         self._update_ui(games, total_score, record, score)
         self.clock.tick(SPEED)
         # 6. return game over and score
-        return reward, game_over, self.score
+        return reward, game_over, self.score, games
 
     def is_collision(self, pt=None):
         if pt is None:
